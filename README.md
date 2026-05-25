@@ -470,36 +470,6 @@ Planned or possible future upgrades:
 
 ---
 
-## For paint.NET forum posting
-
-Suggested short description:
-
-```txt
-RBGI FileType Plugin adds support for opening and saving .RBGI Render Background Image files in paint.NET.
-```
-
-Suggested forum category:
-
-```txt
-Plugins - Publishing ONLY! > FileType Plugins
-```
-
-Recommended forum post info:
-
-- Plug-in name: `RBGI FileType Plugin`
-- File extension: `.rbgi`
-- Type: FileType plug-in
-- paint.NET version tested: `5.1.12`
-- Install folder: `FileTypes`
-- Download: GitHub Releases
-- Source code: This repository
-
-paint.NET forum:
-
-https://forums.getpaint.net/
-
----
-
 ## Credits
 
 Created by **sonicFanTech**.
@@ -512,15 +482,7 @@ paint.NET is created and maintained by its own developers. This project is only 
 
 ## License
 
-No license has been selected yet.
-
-Until a license is added to this repository, the source code and binaries should be treated as **all rights reserved** by default.
-
-Suggested future license options:
-
-- MIT License, if you want people to freely use, modify, and redistribute the plug-in.
-- GPL-style license, if you want modified versions to stay open-source.
-- Custom license, if you want more control.
+MIT LICENSE
 
 ---
 
