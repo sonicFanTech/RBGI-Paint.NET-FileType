@@ -1,4 +1,4 @@
-.# RBGI FileType Plug-in for Paint.NET
+# RBGI FileType Plug-in for Paint.NET
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Paint.NET](https://img.shields.io/badge/Paint.NET-5.2%20Preview-purple)
