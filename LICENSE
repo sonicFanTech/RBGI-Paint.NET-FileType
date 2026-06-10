@@ -1,21 +1,120 @@
-MIT License
+RBGI PAINT.NET FILETYPE PLUGIN SOURCE-AVAILABLE LICENSE
+Version 1.0 — June 10, 2026
 
-Copyright (c) 2026 sonic Fan Tech
+Copyright (c) 2026 sonic Fan Tech. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+IMPORTANT NOTICE
+This is a custom source-available license. It is not an open-source license.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This License applies only to releases of the RBGI Paint.NET FileType Plugin that are distributed with this License. It does not replace, cancel, or revoke any license terms that accompanied an earlier release of the Plugin.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+1. DEFINITIONS
+
+1.1. “Copyright Holder” means sonic Fan Tech.
+
+1.2. “Plugin” means the RBGI Paint.NET FileType Plugin for Paint.NET, including its official pre-compiled DLL file and its source-code files, when distributed with this License.
+
+1.3. “Original Plugin” means an unmodified official release of the Plugin made available by the Copyright Holder.
+
+1.4. “Modified Version” means any altered, adapted, translated, updated, rebuilt, or otherwise modified version of the Plugin or its source code, including any derivative work based in whole or in part on the Plugin.
+
+1.5. “Standalone Distribution” means a download containing only the Plugin or a Modified Version, along with its required license, attribution, documentation, and directly related files. It does not include distribution as part of another program, installer, bundle, collection, service, subscription, or hardware product.
+
+1.6. “RBGI Tools” means the official RBGI Tools Viewer and Editor applications. RBGI Tools are separate software products and are not licensed as source-available software under this License.
+
+2. PERMITTED USES
+
+Subject to all conditions in this License, you may:
+
+2.1. Download, install, and use the official pre-compiled DLL version of the Original Plugin with Paint.NET.
+
+2.2. Use the Plugin to open, save, create, or work with compatible files for personal, educational, or commercial projects. This permission does not allow you to sell, bundle, or redistribute the Plugin except as expressly permitted below.
+
+2.3. Download, inspect, and study the source-code files of the Plugin.
+
+2.4. Modify the Plugin source code and create Modified Versions.
+
+2.5. Redistribute exact, unmodified copies of the Original Plugin as a free Standalone Distribution on other websites.
+
+2.6. Redistribute Modified Versions as a free Standalone Distribution, provided that you fully comply with Section 3.
+
+3. REQUIRED ATTRIBUTION AND REDISTRIBUTION CONDITIONS
+
+Every redistribution of the Original Plugin or a Modified Version must:
+
+3.1. Be provided free of charge. Access to the Plugin or Modified Version must not require a purchase, paid subscription, rental fee, license fee, mandatory donation, or paywall.
+
+3.2. Include an unmodified copy of this License.
+
+3.3. Preserve all copyright notices and existing attribution notices.
+
+3.4. Clearly credit the original creator by including the following statement in a reasonably visible location, such as the download page, README file, documentation, or About dialog:
+
+“Based on the RBGI Paint.NET FileType Plugin originally created by sonic Fan Tech.”
+
+3.5. If the redistribution is a Modified Version, clearly state that it has been modified, identify the person or organization responsible for the modifications, and provide a brief summary of the major changes.
+
+3.6. If reasonably practical, provide a link to the official project page:
+https://github.com/sonicFanTech/RBGI-Paint.NET-FileType
+
+3.7. Not state or imply that a Modified Version is an official release, is endorsed by the Copyright Holder, or was created by the Copyright Holder.
+
+4. PROHIBITED USES
+
+Unless you receive prior written permission from the Copyright Holder, you may not:
+
+4.1. Sell, rent, license for a fee, place behind a paywall, or otherwise charge money for the Original Plugin, its official pre-compiled DLL, its source-code files, any Modified Version, or any derivative work based on the Plugin.
+
+4.2. Bundle, package, embed, include, preload, or distribute the Original Plugin or any Modified Version as part of any other free or paid software, installer, software package, service, subscription, hardware product, or compilation. A permitted free Standalone Distribution under Sections 2 and 3 is not considered a prohibited bundle.
+
+4.3. Claim ownership or original authorship of the Original Plugin or any portion of the Original Plugin that you did not create.
+
+4.4. Remove, hide, falsify, or misrepresent copyright, license, attribution, or authorship information.
+
+4.5. Intentionally misrepresent a Modified Version as the Original Plugin, falsely attribute problems introduced by your modifications to the Copyright Holder, or knowingly make false statements about the authorship or origin of the Plugin. Nothing in this License prohibits honest reviews, criticism, bug reports, or statements of fact.
+
+4.6. Use the Copyright Holder’s name, project name, branding, or identifying marks to claim endorsement of a Modified Version or unrelated product.
+
+4.7. Grant any sublicense or impose any additional terms that conflict with this License.
+
+5. SEPARATE RULES FOR RBGI TOOLS VIEWER AND EDITOR
+
+5.1. RBGI Tools are separate software products. This License does not grant access to their source code and does not grant permission to create or distribute source-code copies of RBGI Tools.
+
+5.2. Except where applicable law expressly permits otherwise, you may not reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code of RBGI Tools.
+
+5.3. You may not upload, publish, share, sell, redistribute, host, or place behind a paywall any source code obtained or reconstructed by reverse engineering, decompiling, disassembling, or otherwise attempting to derive the source code of RBGI Tools.
+
+5.4. The Copyright Holder may also distribute RBGI Tools under a separate end-user license agreement or additional terms. If those terms apply, you must comply with them as well.
+
+6. THIRD-PARTY COMPONENTS AND COMPATIBILITY REFERENCES
+
+6.1. This License applies only to material owned by the Copyright Holder. Third-party components, libraries, or files remain subject to their own license terms.
+
+6.2. Paint.NET is referenced only to describe compatibility. This License does not claim ownership of Paint.NET and does not state or imply endorsement by the developers or owners of Paint.NET.
+
+7. NO WARRANTY
+
+THE PLUGIN IS PROVIDED “AS IS” AND “AS AVAILABLE,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. YOU USE THE PLUGIN AT YOUR OWN RISK.
+
+8. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGE, LOSS, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE PLUGIN, ITS SOURCE CODE, A MODIFIED VERSION, OR THE USE OR INABILITY TO USE ANY OF THEM.
+
+9. TERMINATION
+
+9.1. Your rights under this License automatically terminate if you violate any term of this License.
+
+9.2. After termination, you must stop distributing the Plugin and any Modified Version and remove any copies that you host or control, except to the extent that applicable law requires otherwise.
+
+9.3. Sections concerning ownership, prohibited uses, RBGI Tools, warranty, limitation of liability, and interpretation survive termination.
+
+10. SEVERABILITY
+
+If any provision of this License is found unenforceable, that provision shall be limited or removed only to the minimum extent necessary, and the remaining provisions shall remain in effect.
+
+11. ADDITIONAL PERMISSIONS
+
+The Copyright Holder may grant additional permissions or exceptions in writing. Any permission that is not expressly granted by this License is reserved by the Copyright Holder.
+
+END OF LICENSE
