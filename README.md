@@ -1,32 +1,37 @@
-# RBGI FileType Plugin for paint.NET
+.# RBGI FileType Plug-in for Paint.NET
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
-![paint.NET](https://img.shields.io/badge/paint.NET-5.1%2B-purple)
-![Framework](https://img.shields.io/badge/.NET-net9.0--windows-blueviolet)
-![Status](https://img.shields.io/badge/status-public%20beta-orange)
+![Paint.NET](https://img.shields.io/badge/Paint.NET-5.2%20Preview-purple)
+![Framework](https://img.shields.io/badge/.NET-net10.0--windows-blueviolet)
+![Status](https://img.shields.io/badge/status-preview-orange)
 
-A custom **paint.NET FileType plug-in** that adds support for opening and saving **`.RBGI` Render Background Image** files.
+A third-party **Paint.NET FileType plug-in** that adds support for opening and saving **`.RBGI` Render Background Image** files.
 
-`.RBGI` is a custom image format made for **MozAluz RBGI Tools**, **Source BSP Explorer**, and other sonicFanTech projects that need a simple render-background / skybox-friendly image container. Internally, the current `.RBGI v1` format stores a small binary header, JSON metadata, and embedded PNG image data.
+`.RBGI` is a custom image-container format made for **MozAluz RBGI Tools**, **Source BSP Explorer**, and other sonicFanTech projects that need render-background or skybox-friendly image assets. The current `.RBGI v1` format stores a small binary header, compact JSON metadata, and embedded PNG image data.
 
-This plug-in lets paint.NET treat `.RBGI` files like a normal image format, so you can open them, edit them, and save them back out from paint.NET.
+This version has been migrated to the **new Paint.NET 5.2 FileType plug-in system** and now includes a configurable Save Options window.
 
 > [!IMPORTANT]
-> This is an unofficial third-party paint.NET plug-in. It is not made by, endorsed by, or bundled with paint.NET.
+> This is an unofficial third-party Paint.NET plug-in. It is not made by, endorsed by, or bundled with Paint.NET.
+
+> [!WARNING]
+> This release is intended for **Paint.NET 5.2 Preview** testing. Keep using the earlier Paint.NET 5.1.12-compatible release if you have not installed Paint.NET 5.2 Preview yet.
 
 ---
 
 ## Features
 
-- Adds `.rbgi` to paint.NET's **Open** dialog.
-- Adds `.rbgi` to paint.NET's **Save As** file type list.
+- Adds `.rbgi` to Paint.NET's **Open** dialog.
+- Adds `.rbgi` to Paint.NET's **Save As** file-type list.
 - Opens real `.RBGI v1` files.
 - Saves images as real `.RBGI v1` files.
-- Supports legacy `.RBGI` files that are actually PNG files renamed to `.rbgi`.
-- Uses pure C# for the paint.NET plug-in side.
-- Does **not** require the original Qt/C++ `SharedRBGIformat.dll` to be installed.
-- Stores image pixels using embedded PNG data.
-- Writes basic/default metadata when saving.
+- Supports older legacy `.RBGI` files that are actually PNG files renamed to `.rbgi`.
+- Uses Paint.NET 5.2's built-in PNG FileType pipeline for the embedded PNG payload.
+- Does **not** require the original Qt/C++ `SharedRBGIformat.dll`.
+- Does **not** use the older `System.Drawing.Bitmap` / `Graphics` PNG workflow.
+- Includes stronger validation for damaged, truncated, oversized, or inconsistent `.RBGI` files.
+- Includes a Save Options window with selectable RBGI image modes and editable metadata.
+- Includes an installer for classic Paint.NET installations.
 
 ---
 
@@ -34,7 +39,7 @@ This plug-in lets paint.NET treat `.RBGI` files like a normal image format, so y
 
 **RBGI** stands for **Render Background Image**.
 
-The format is designed to be a lightweight image container for render backgrounds, flat preview images, and future skybox-style workflows. The current v1 layout is:
+The current `.RBGI v1` file layout is:
 
 ```txt
 [Header][Metadata JSON][Embedded PNG]
@@ -46,20 +51,51 @@ The file begins with the ASCII magic value:
 RBGI
 ```
 
-After that, it stores version/header information, metadata size, PNG size, compact JSON metadata, and then the actual PNG image bytes.
+After that, it stores version and header information, dimensions, an image-mode value, flags, metadata size, PNG size, compact JSON metadata, and the embedded PNG image bytes.
 
 ### Current image modes
-
-The RBGI SDK defines these image modes:
 
 | Mode value | Name | Meaning |
 |---:|---|---|
 | `0` | `FlatImage` | Normal flat image |
-| `1` | `RenderBackground` | Render background image |
-| `2` | `SkyBoxSingleTexture` | Future/skybox single-texture use |
-| `3` | `SkyBoxCubeTexture` | Future/skybox cube-texture use |
+| `1` | `RenderBackground` | Render-background image |
+| `2` | `SkyBoxSingleTexture` | Skybox using one texture |
+| `3` | `SkyBoxCubeTexture` | Skybox cube-texture workflow |
 
-At the moment, this paint.NET plug-in saves using `RenderBackground` mode by default.
+The Save Options window lets you choose the mode while exporting.
+
+### Export metadata
+
+The Save Options window currently allows you to set:
+
+- Image name
+- Author
+- Description
+- Content version
+
+The exported metadata also records the RBGI format, selected image mode, and plug-in encoder information.
+
+---
+
+## Paint.NET version compatibility
+
+| Plug-in release | Paint.NET version | Status |
+|---|---|---|
+| Earlier public beta | Paint.NET `5.1.12` | Available for users who remain on Paint.NET 5.1 |
+| `v1.1.0 Preview` | Paint.NET `5.2 Preview` | Current preview-testing release |
+| Future finalized release | Stable Paint.NET `5.2` | Planned after Paint.NET 5.2 is officially released |
+
+> [!CAUTION]
+> Do not install the old Paint.NET 5.1 DLL and the new Paint.NET 5.2-preview DLL at the same time. They both register the `.rbgi` extension and may conflict with each other.
+
+### Tested preview build
+
+This preview version has been tested successfully with:
+
+```txt
+Paint.NET 5.2 Alpha
+5.200.9650.36619
+```
 
 ---
 
@@ -68,79 +104,77 @@ At the moment, this paint.NET plug-in saves using `RenderBackground` mode by def
 ### For normal users
 
 - Windows
-- paint.NET 5.1 or newer is recommended
-- A copy of `RBGIFileType.dll`
+- Paint.NET 5.2 Preview or a compatible Paint.NET 5.2 build
+- The included installer, or a copy of `RBGIFileType.Preview52.dll`
 
-This plug-in has been tested with:
-
-```txt
-paint.NET 5.1.12
-```
-
-It may work on other paint.NET 5.1+ builds, but older paint.NET versions may require changes because paint.NET's plug-in API and .NET target changed over time.
-
-### For developers/building from source
+### For developers building from source
 
 - Windows
-- Visual Studio 2022 or newer, or Visual Studio 2026
-- .NET SDK 9 or newer
-- paint.NET installed locally
+- Visual Studio 2022 or newer
+- .NET 10 SDK
+- Paint.NET 5.2 Preview installed locally
 - C#/.NET desktop build tools
 
-The project currently targets:
+The Paint.NET 5.2-preview project targets:
 
 ```txt
-net9.0-windows
+net10.0-windows
 ```
 
 ---
 
 ## Installation
 
-### Classic paint.NET install
+### Recommended: installer
 
-1. Close paint.NET.
-2. Download `RBGIFileType.dll` from the latest release.
-3. Copy `RBGIFileType.dll` into paint.NET's `FileTypes` folder:
-
-```txt
-C:\Program Files\paint.net\FileTypes
-```
-
-Depending on how your copy of paint.NET is installed, the folder may also appear as:
-
-```txt
-C:\Program Files\Paint.NET\FileTypes
-```
-
-Windows paths are usually not case-sensitive, so both names may point to the same place depending on your setup.
-
-4. Start paint.NET again.
-5. Go to **File > Open** or **File > Save As**.
-6. Look for:
+1. Close Paint.NET.
+2. Download the Paint.NET 5.2-preview RBGI installer from the latest pre-release.
+3. Run the installer.
+4. The installer will look for Paint.NET, verify that a compatible Paint.NET 5.2 build is installed, and copy the plug-in into Paint.NET's `FileTypes` folder.
+5. Start Paint.NET again.
+6. Go to **File > Open** or **File > Save As** and look for:
 
 ```txt
 RBGI Render Background Image (*.rbgi)
 ```
 
-### Microsoft Store paint.NET install
+### Manual installation: classic Paint.NET install
 
-For the Microsoft Store version, put the DLL here instead:
+1. Close Paint.NET.
+2. Remove the older Paint.NET 5.1-compatible `RBGIFileType.dll` if it is already installed.
+3. Download `RBGIFileType.Preview52.dll` from the latest Paint.NET 5.2-preview release.
+4. Copy it into:
+
+```txt
+C:\Program Files\Paint.NET\FileTypes
+```
+
+Depending on your installation, the same location may appear as:
+
+```txt
+C:\Program Files\paint.net\FileTypes
+```
+
+5. Restart Paint.NET.
+
+### Microsoft Store installation
+
+For the Microsoft Store version of Paint.NET, FileType plug-ins are normally placed in:
 
 ```txt
 Documents\paint.net App Files\FileTypes
 ```
 
-If the `FileTypes` folder does not exist, create it manually.
+The current Paint.NET 5.2-preview installer is intended for classic installations. Store-version preview installation has not yet been tested, so manual installation may be required.
 
-### Important install notes
+### Important installation notes
 
 - FileType plug-ins go in the `FileTypes` folder, not the `Effects` folder.
-- Restart paint.NET after copying the DLL.
-- The plug-in will not appear under the **Effects** menu.
-- FileType plug-ins appear in the **Open** and **Save As** dialogs.
+- Restart Paint.NET after installing or replacing the DLL.
+- This plug-in will not appear under the **Effects** menu.
+- FileType plug-ins appear in Paint.NET's **Open** and **Save As** dialogs.
 
-Official paint.NET plug-in installation documentation:
+Official Paint.NET plug-in installation documentation:
 
 https://www.getpaint.net/doc/latest/InstallPlugins.html
 
@@ -150,23 +184,23 @@ https://www.getpaint.net/doc/latest/InstallPlugins.html
 
 ### Opening `.RBGI` files
 
-1. Open paint.NET.
+1. Open Paint.NET.
 2. Go to **File > Open**.
 3. Select an `.rbgi` file.
-4. paint.NET should load the embedded image.
+4. Paint.NET should load the embedded image.
 
-The plug-in supports two kinds of `.RBGI` files:
+Supported file kinds:
 
 | File kind | Supported? | Notes |
 |---|---:|---|
-| Real `.RBGI v1` file | Yes | Uses the RBGI header + metadata + PNG layout |
-| Legacy renamed PNG `.RBGI` | Yes | If the file is really a PNG with a `.rbgi` extension, the plug-in tries to load it as PNG |
+| Real `.RBGI v1` file | Yes | Uses the RBGI header, metadata JSON, and embedded PNG layout |
+| Legacy renamed-PNG `.RBGI` | Yes | If the file is really a PNG with an `.rbgi` extension, the plug-in attempts to load it as PNG data |
 | Future unknown `.RBGI` versions | Not guaranteed | May require a plug-in update |
-| Multi-layer paint.NET project data | No | `.RBGI` is an image format, not a `.pdn` project format |
+| Multi-layer Paint.NET project data | No | `.RBGI` is an exported image format, not a `.pdn` project format |
 
 ### Saving `.RBGI` files
 
-1. Open or create an image in paint.NET.
+1. Open or create an image in Paint.NET.
 2. Go to **File > Save As**.
 3. Set **Save as type** to:
 
@@ -174,39 +208,36 @@ The plug-in supports two kinds of `.RBGI` files:
 RBGI Render Background Image (*.rbgi)
 ```
 
-4. Save the file.
+4. Choose the RBGI image mode.
+5. Fill in any optional metadata fields.
+6. Save the file.
 
-The saved file will be a real `.RBGI v1` file with PNG image data embedded inside it.
+The plug-in will export a real `.RBGI v1` file containing the selected mode, metadata JSON, and embedded PNG image data.
 
 > [!NOTE]
-> paint.NET will flatten the final visible image when saving to normal image file formats. If you need to preserve layers, keep a `.pdn` copy too.
+> Paint.NET flattens the final visible image when exporting to normal image file formats. Keep a `.pdn` master copy if you need to preserve layers.
 
 ---
 
 ## Current limitations
 
-This first release focuses on getting reliable open/save support working. Some extra format features are planned but not finished yet.
+The Paint.NET 5.2-preview release adds the planned Save Options window and metadata export fields, but some items are still unfinished:
 
-Current limitations:
+- Original custom metadata is not automatically restored into the Save Options window when an existing `.rbgi` file is opened and saved again.
+- Paint.NET layers are not stored inside `.RBGI` files.
+- The current installer is focused on classic Paint.NET installations.
+- Paint.NET 5.2 itself is still in preview, so API changes may require another plug-in update before the final stable release.
 
-- No save-options dialog yet.
-- No metadata editor yet.
-- Saves with default/basic metadata.
-- Saves as `RenderBackground` mode by default.
-- Does not currently let the user pick `FlatImage`, `SkyBoxSingleTexture`, or `SkyBoxCubeTexture` from the Save dialog.
-- Does not preserve original custom metadata when saving over a file.
-- Does not store paint.NET layers.
-- Does not include an installer yet.
+Recommended workflow:
 
-Recommended workflow for now:
-
-1. Keep a `.pdn` master copy if you need layers.
-2. Export/save a `.rbgi` copy when you need the RBGI file.
+1. Keep a `.pdn` master copy when layers matter.
+2. Export an `.rbgi` copy for use in RBGI-compatible projects.
 3. Back up important `.rbgi` files before overwriting them.
+4. Use the Paint.NET 5.1-compatible DLL only with Paint.NET 5.1, and the Paint.NET 5.2-preview DLL only with Paint.NET 5.2 Preview.
 
 ---
 
-## Building from source
+## Building the Paint.NET 5.2-preview version from source
 
 Clone the repository:
 
@@ -215,38 +246,44 @@ git clone https://github.com/sonicFanTech/RBGI-Paint.NET-FileType.git
 cd RBGI-Paint.NET-FileType
 ```
 
+Enter the Paint.NET 5.2-preview source folder:
+
+```bat
+cd preview-5.2-migration
+```
+
 Build in Release mode:
 
 ```bat
 dotnet build -c Release
 ```
 
-The output DLL should be created at something like:
+The expected output DLL is:
 
 ```txt
-bin\Release\net9.0-windows\RBGIFileType.dll
+bin\Release\net10.0-windows\RBGIFileType.Preview52.dll
 ```
 
-Copy that DLL to:
+Copy it into:
 
 ```txt
-C:\Program Files\paint.net\FileTypes
+C:\Program Files\Paint.NET\FileTypes
 ```
 
-Then restart paint.NET.
+Then restart Paint.NET.
 
-### Building when paint.NET is installed somewhere else
+### Building when Paint.NET is installed somewhere else
 
-The project file uses this default path:
+The preview project uses this default path:
 
 ```txt
 C:\Program Files\paint.net
 ```
 
-If your paint.NET install is in a different folder, build with:
+If Paint.NET 5.2 Preview is installed somewhere else, build with:
 
 ```bat
-dotnet build -c Release -p:PaintNetInstallDir="D:\Path\To\paint.net"
+dotnet build -c Release -p:PaintNetInstallDir="D:\Path\To\Paint.NET"
 ```
 
 Example:
@@ -255,9 +292,9 @@ Example:
 dotnet build -c Release -p:PaintNetInstallDir="C:\Program Files\Paint.NET"
 ```
 
-### Auto-install after build
+### Auto-install after building
 
-The project includes an optional MSBuild target that can copy the DLL directly into the classic paint.NET `FileTypes` folder.
+The preview project includes an optional MSBuild target that copies the newly built DLL directly into Paint.NET's `FileTypes` folder.
 
 Run:
 
@@ -265,40 +302,50 @@ Run:
 dotnet build -c Release -p:AutoInstallToPaintNet=true
 ```
 
-If paint.NET is installed somewhere else:
+If Paint.NET is installed elsewhere:
 
 ```bat
-dotnet build -c Release -p:AutoInstallToPaintNet=true -p:PaintNetInstallDir="D:\Path\To\paint.net"
+dotnet build -c Release -p:AutoInstallToPaintNet=true -p:PaintNetInstallDir="D:\Path\To\Paint.NET"
 ```
 
-You may need to run the terminal as Administrator if copying into `C:\Program Files`.
+You may need to run the terminal as Administrator when copying into `C:\Program Files`.
 
 ---
 
 ## Project structure
 
-Typical source layout:
+The repository keeps the earlier Paint.NET 5.1-compatible source while the Paint.NET 5.2-preview migration is being tested.
 
 ```txt
 RBGI-Paint.NET-FileType/
 ├─ README.md
+├─ LICENSE
+├─ preview-5.2-migration/
+│  ├─ RBGIFileTypePlugin.Preview52.csproj
+│  ├─ README_PREVIEW_5_2.md
+│  ├─ TEST_CHECKLIST.md
+│  ├─ Samples/
+│  └─ src/
+│     ├─ RbgiFileTypeFactory.cs
+│     ├─ RbgiFileType.cs
+│     ├─ RbgiCodec.cs
+│     └─ RbgiPngBridge.cs
 ├─ RBGIFileTypePlugin.csproj
-├─ src/
-│  ├─ RbgiFileTypeFactory.cs
-│  ├─ RbgiFileType.cs
-│  └─ RbgiCodec.cs
-└─ docs/
-   └─ RBGI_PLUGIN_NOTES.md
+└─ src/
+   ├─ RbgiFileTypeFactory.cs
+   ├─ RbgiFileType.cs
+   └─ RbgiCodec.cs
 ```
 
-### Main source files
+### Main Paint.NET 5.2-preview source files
 
 | File | Purpose |
 |---|---|
-| `RbgiFileTypeFactory.cs` | Registers the file type with paint.NET |
-| `RbgiFileType.cs` | Handles paint.NET load/save integration |
-| `RbgiCodec.cs` | Reads and writes the `.RBGI` binary format |
-| `RBGIFileTypePlugin.csproj` | Build/project file |
+| `RbgiFileTypeFactory.cs` | Registers the new Paint.NET 5.2 FileType |
+| `RbgiFileType.cs` | Provides the configurable Save Options window and handles Paint.NET load/save integration |
+| `RbgiCodec.cs` | Reads, validates, and writes the `.RBGI v1` binary container |
+| `RbgiPngBridge.cs` | Sends embedded PNG loading and saving through Paint.NET's built-in PNG FileType system |
+| `RBGIFileTypePlugin.Preview52.csproj` | Configures the .NET 10 build and Paint.NET 5.2-preview assembly references |
 
 ---
 
@@ -306,11 +353,9 @@ RBGI-Paint.NET-FileType/
 
 ### RBGI v1 file layout
 
-The plug-in is designed around the current `.RBGI v1` layout:
-
 | Part | Description |
 |---|---|
-| Header | Binary header containing magic, version, size, dimensions, mode, flags, PNG size, and metadata size |
+| Header | Binary header containing magic, version, header size, dimensions, mode, flags, PNG size, and metadata size |
 | Metadata JSON | Compact JSON metadata block |
 | Embedded PNG | PNG image bytes |
 
@@ -323,150 +368,106 @@ The plug-in is designed around the current `.RBGI v1` layout:
 | `headerSize` | Header size, currently `38` bytes |
 | `width` | Image width |
 | `height` | Image height |
-| `mode` | RBGI image mode value |
+| `mode` | RBGI image-mode value |
 | `flags` | Reserved, currently `0` |
 | `pngSize` | Size of the embedded PNG data |
 | `metadataSize` | Size of the JSON metadata block |
 
 ### Legacy PNG fallback
 
-Older test `.RBGI` files may simply be PNG files renamed to `.rbgi`.
+Some older test `.RBGI` files may simply be PNG files renamed to `.rbgi`.
 
-If the plug-in opens a file that does not start with `RBGI`, it attempts to load the file as PNG image data. This allows older/legacy `.rbgi` files to still open instead of failing immediately.
+When the plug-in opens a file that does not begin with the `RBGI` magic header, it attempts to read it as PNG image data. This allows older legacy `.rbgi` files to continue opening.
+
+### Validation
+
+The Paint.NET 5.2-preview plug-in performs checks for:
+
+- Missing or invalid RBGI headers
+- Unsupported RBGI versions
+- Truncated or oversized files
+- Oversized metadata blocks
+- Missing or invalid embedded PNG signatures
+- Missing PNG `IHDR` chunks
+- Invalid PNG dimensions
+- Header dimensions that do not match the embedded PNG dimensions
+- Invalid metadata JSON
 
 ---
 
 ## Troubleshooting
 
-### The file type does not show up in paint.NET
+### The installer says Paint.NET 5.2 Preview is not installed
 
-Try these steps:
-
-1. Make sure paint.NET is fully closed.
-2. Make sure `RBGIFileType.dll` is inside the `FileTypes` folder, not `Effects`.
-3. Restart paint.NET.
-4. Check **File > Open** or **File > Save As**.
-5. Make sure you are using a supported paint.NET version.
-
-Correct folder for classic paint.NET:
+The current Paint.NET 5.2 Alpha identifies itself with a version number similar to:
 
 ```txt
-C:\Program Files\paint.net\FileTypes
+5.200.9650.36619
 ```
 
-Correct folder for Microsoft Store paint.NET:
+Use an up-to-date copy of the RBGI installer that recognizes the Paint.NET 5.2-preview version format.
 
-```txt
-Documents\paint.net App Files\FileTypes
-```
+### The file type does not appear in Paint.NET
+
+1. Fully close Paint.NET.
+2. Make sure `RBGIFileType.Preview52.dll` is inside the `FileTypes` folder, not `Effects`.
+3. Remove the older Paint.NET 5.1-compatible `RBGIFileType.dll` if it is still installed.
+4. Restart Paint.NET.
+5. Check **File > Open** or **File > Save As**.
+6. Confirm that you are using Paint.NET 5.2 Preview.
 
 ### The plug-in does not appear in the Effects menu
 
 That is normal.
 
-This is a **FileType** plug-in, not an **Effect** plug-in. It appears in Open/Save file dialogs.
+This is a **FileType** plug-in, not an **Effect** plug-in. It appears in Open and Save As dialogs.
 
-### I get permission denied when copying the DLL
+### The project does not build because Paint.NET DLLs are missing
 
-`C:\Program Files` is protected by Windows.
+Make sure Paint.NET 5.2 Preview is installed and that the project points to the correct folder.
 
-Try one of these:
-
-- Copy the DLL as Administrator.
-- Open File Explorer as Administrator.
-- Use the Microsoft Store plug-in folder if you are using the Store version.
-- Build with `AutoInstallToPaintNet=true` from an Administrator terminal.
-
-### The project does not build because paint.NET DLLs are missing
-
-Make sure paint.NET is installed and that this path exists:
-
-```txt
-C:\Program Files\paint.net
-```
-
-If paint.NET is installed somewhere else, pass the path to MSBuild:
+Example:
 
 ```bat
-dotnet build -c Release -p:PaintNetInstallDir="D:\Path\To\paint.net"
+dotnet build -c Release -p:PaintNetInstallDir="C:\Program Files\Paint.NET"
 ```
 
-### I see MSB3277 warnings while building
+### Visual Studio reports ambiguous Paint.NET FileType API references
 
-Some paint.NET plug-in projects can produce assembly version conflict warnings when building against paint.NET's installed DLLs. The project suppresses `MSB3277` by default because it is usually warning noise in this context.
+Paint.NET 5.2 Preview keeps the older FileType API available for compatibility. The new source explicitly aliases the new `PaintDotNet.FileTypes` namespace to avoid collisions with the old API.
 
-If the build succeeds and the DLL loads in paint.NET, those warnings are usually not a problem.
+Make sure you are building the latest source from:
+
+```txt
+preview-5.2-migration
+```
 
 ### Opening a file fails
 
 Possible reasons:
 
-- The file is not a real `.RBGI` file.
+- The file is not a real `.RBGI` file or legacy renamed PNG.
 - The file is damaged.
 - The embedded PNG data is corrupt.
-- The file uses a future `.RBGI` version that this plug-in does not understand yet.
-- The metadata or embedded PNG section is too large or invalid.
+- The file uses a future `.RBGI` version that this plug-in does not understand.
+- The metadata or embedded PNG section is too large or inconsistent.
 
 ---
 
-## Release packaging
+## Forum thread and acknowledgements
 
-A normal release ZIP should include:
+The original public-beta discussion is available on the Paint.NET forum:
 
-```txt
-RBGIFileType.dll
-README.md
-```
+https://forums.paint.net/topic/134445-beta-rbgi-filetype-plugin-rbgi-opensave-render-background-image-files/
 
-Optional extras:
+Special thanks to:
 
-```txt
-LICENSE
-CHANGELOG.md
-sample-files/
-```
+- **Tactilis** — for pointing out that Paint.NET 5.2 introduces a new FileType plug-in system and recommending that this newly created plug-in migrate to it.
+- **Rick Brewster** — Paint.NET author and developer — for explaining the new Paint.NET 5.2 FileType system, linking example conversions, recommending that the plug-in move away from `System.Drawing`, and suggesting Paint.NET's built-in PNG FileType pipeline through `IFileTypesService.CreatePngFileType()`.
 
-Suggested release naming:
+Additional reference material:
 
-```txt
-RBGIFileTypePlugin-v1.0.0-beta.zip
-RBGIFileTypePlugin-v1.0.0.zip
-RBGIFileTypePlugin-v1.1.0.zip
-```
-
-Suggested GitHub release description:
-
-```md
-## RBGI FileType Plugin for paint.NET v1.0.0-beta
-
-First public beta release.
-
-### Features
-- Adds .RBGI open/save support to paint.NET.
-- Supports real RBGI v1 files.
-- Supports legacy renamed-PNG .RBGI files.
-- Saves as RBGI v1 with embedded PNG data.
-
-### Install
-Copy `RBGIFileType.dll` to your paint.NET `FileTypes` folder, then restart paint.NET.
-```
-
----
-
-## Roadmap
-
-Planned or possible future upgrades:
-
-- Save-options dialog.
-- Metadata editor.
-- Preserve metadata when opening and saving.
-- Let users choose RBGI image mode when saving.
-- Add a small installer.
-- Add sample `.rbgi` files.
-- Add automated build/release workflow.
-- Add better validation/testing for corrupted files.
-- Add a changelog.
-- Add better documentation for the `.RBGI` format.
+- The Paint.NET 5.2 conversion branches for FileType plug-ins maintained by **null54 / 0xC0000054**, which were linked in the forum discussion and used as migration examples.
 
 ---
 
@@ -476,23 +477,55 @@ Created by **sonicFanTech**.
 
 Made for the `.RBGI` Render Background Image format used by sonicFanTech projects such as MozAluz RBGI Tools and Source BSP Explorer.
 
-paint.NET is created and maintained by its own developers. This project is only a third-party plug-in.
+Paint.NET is created and maintained by its own developers. This repository is an unofficial third-party plug-in project.
 
 ---
 
 ## License
 
-Custom LICENSE
+This project uses the custom **RBGI Paint.NET FileType Plug-in Source-Available License**.
+
+See [`LICENSE`](LICENSE) for the complete terms.
+
+This project is **not** distributed under the MIT License.
 
 ---
 
 ## Version history
 
-### v1.0.0-beta / v1.0.1 test build
+### v1.1.0 Preview — Paint.NET 5.2 Preview
 
-- First working public/test build.
-- Adds `.RBGI` open support.
-- Adds `.RBGI` save support.
-- Supports RBGI v1 header + metadata + embedded PNG.
-- Supports legacy renamed-PNG `.RBGI` files.
-- Confirmed working in paint.NET 5.1.12.
+- Migrated to Paint.NET 5.2's new FileType plug-in system.
+- Updated the project to target `.NET 10` / `net10.0-windows`.
+- Added a Save Options window.
+- Added selectable RBGI image modes.
+- Added editable image-name, author, description, and content-version metadata.
+- Moved embedded PNG handling through Paint.NET's built-in PNG FileType pipeline.
+- Removed the older `System.Drawing` PNG workflow from the Paint.NET 5.2-preview source.
+- Added stronger RBGI-container validation.
+- Added an installer for classic Paint.NET installations.
+- Retained legacy renamed-PNG `.rbgi` support.
+- Confirmed working with Paint.NET 5.2 Alpha build `5.200.9650.36619`.
+
+### v1.0.0-beta / v1.0.1 test build — Paint.NET 5.1.12
+
+- First public beta and test builds.
+- Added `.RBGI` open support.
+- Added `.RBGI` save support.
+- Supported RBGI v1 headers, metadata JSON, and embedded PNG data.
+- Supported legacy renamed-PNG `.RBGI` files.
+- Confirmed working in Paint.NET 5.1.12.
+
+---
+
+## Roadmap
+
+Planned or possible future updates:
+
+- Preserve original custom metadata automatically when opening and saving `.rbgi` files.
+- Finalize the plug-in after the stable release of Paint.NET 5.2.
+- Test and improve Microsoft Store installation support.
+- Add more sample `.rbgi` files.
+- Add automated build and release workflows.
+- Add a changelog.
+- Add more documentation for the `.RBGI` format.
