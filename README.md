@@ -482,7 +482,7 @@ paint.NET is created and maintained by its own developers. This project is only 
 
 ## License
 
-MIT LICENSE
+Custom LICENSE
 
 ---
 
