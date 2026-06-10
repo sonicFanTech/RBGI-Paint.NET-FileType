@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Paint.NET 5.2 preview plug-ins use the new FileType API and .NET 10. -->
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RBGIFileType.Preview52</AssemblyName>
+    <RootNamespace>RBGIFileTypePlugin.Preview52</RootNamespace>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Company>sonicFanTech</Company>
+    <Authors>sonicFanTech</Authors>
+    <Product>RBGI FileType Plugin for Paint.NET 5.2 Preview</Product>
+    <Description>Paint.NET 5.2 preview migration candidate for .RBGI Render Background Image load/save support.</Description>
+    <Copyright>Copyright © sonicFanTech</Copyright>
+    <Version>1.1.0-preview.5</Version>
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PaintNetInstallDir Condition="'$(PaintNetInstallDir)' == ''">C:\Program Files\paint.net</PaintNetInstallDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Keep these references private=false: Paint.NET supplies them at runtime. -->
+    <Reference Include="PaintDotNet.Base"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Base.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.ComponentModel"><HintPath>$(PaintNetInstallDir)\PaintDotNet.ComponentModel.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Core"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Data"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Data.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.FileTypes"><HintPath>$(PaintNetInstallDir)\PaintDotNet.FileTypes.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Framework"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Framework.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Fundamentals"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Fundamentals.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Primitives"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Primitives.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.PropertySystem"><HintPath>$(PaintNetInstallDir)\PaintDotNet.PropertySystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Windows"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Windows.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Windows.Core"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Windows.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Windows.Framework"><HintPath>$(PaintNetInstallDir)\PaintDotNet.Windows.Framework.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <!-- Optional: run dotnet build -c Release /p:AutoInstallToPaintNet=true -->
+  <Target Name="CopyToPaintNetFileTypes" AfterTargets="Build" Condition="'$(AutoInstallToPaintNet)' == 'true'">
+    <MakeDir Directories="$(PaintNetInstallDir)\FileTypes" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PaintNetInstallDir)\FileTypes" />
+  </Target>
+</Project>
