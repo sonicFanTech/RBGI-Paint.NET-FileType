@@ -16,6 +16,32 @@ This version has been migrated to the **new Paint.NET 5.2 FileType plug-in syste
 
 > [!WARNING]
 > This release is intended for **Paint.NET 5.2 Preview** testing. Keep using the earlier Paint.NET 5.1.12-compatible release if you have not installed Paint.NET 5.2 Preview yet.
+>
+## Full installation and usage demo
+
+A complete demonstration video is now available on YouTube:
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=gd56dtzv6XE">
+    <img src="https://img.youtube.com/vi/gd56dtzv6XE/maxresdefault.jpg" width="720" alt=".RBGI FileType Plug-in for Paint.NET 5.2 Preview — Full Demo">
+  </a>
+</p>
+
+**[Watch the `.RBGI` FileType Plug-in for Paint.NET 5.2 Preview full demo on YouTube](https://www.youtube.com/watch?v=gd56dtzv6XE)**
+
+The video shows:
+
+* Where to download the plug-in.
+* The installer correctly detecting that Paint.NET `5.1.12` is not compatible with the new Paint.NET 5.2-preview build.
+* Installing Paint.NET 5.2 Preview.
+* Installing the `.RBGI` FileType plug-in.
+* Confirming that `.RBGI` appears in Paint.NET's Open and Save As file-type lists.
+* Creating a basic `256 × 256` black-and-orange gradient image.
+* Saving the image as a real `.RBGI` file.
+* Using the Save Options window and entering custom metadata.
+* Opening Source BSP Explorer and using the exported `.RBGI` file as its rendered background.
+
+---
 
 ---
 
